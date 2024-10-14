@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <!-- Meta Tags -->
@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Icons (Font Awesome) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pQgZc3xM9+czScHkqZta+KgX6C+2/x0j/W7V0IvpuuC2pG4czn0Ajw8xqBzX0VhM1k2t1YfHq9tL2kz1EoJLMw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Scripts -->
     <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
@@ -49,11 +49,11 @@
             <!-- Search Bar for Desktop -->
             <div class="search-bar">
                 <input type="text" id="search-bar" placeholder="Search..." aria-label="Search">
-                <button onclick="debouncedSearch()">Search</button>
+                <button onclick="debouncedSearch()" aria-label="Search Button"><i class="fas fa-search"></i></button>
             </div>
 
             <!-- Hamburger Menu Icon for Mobile -->
-            <div class="hamburger-menu" id="hamburger-menu" aria-label="Menu" aria-expanded="false">
+            <div class="hamburger-menu" id="hamburger-menu" aria-label="Menu" aria-expanded="false" role="button" tabindex="0">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -62,14 +62,14 @@
     </header>
 
     <!-- Sidebar for Mobile -->
-    <aside id="sidebar" class="sidebar">
+    <aside id="sidebar" class="sidebar" aria-hidden="true">
         <div class="sidebar-content">
             <div class="sidebar-logo">
                 <h1>TorqueTrend</h1>
             </div>
 
             <!-- Sidebar Navigation for Mobile -->
-            <nav class="sidebar-nav">
+            <nav class="sidebar-nav" aria-label="Mobile Navigation">
                 <ul>
                     <li><a href="#home" aria-label="Home" onclick="toggleSidebar()">Home</a></li>
                     <li><a href="#features" aria-label="Features" onclick="toggleSidebar()">Features</a></li>
@@ -84,137 +84,181 @@
             <!-- Search Bar Inside the Sidebar for Mobile -->
             <div class="sidebar-search">
                 <input type="text" id="sidebar-search-bar" placeholder="Search..." aria-label="Mobile Search">
-                <button onclick="debouncedSearch()">Search</button>
+                <button onclick="debouncedSearch()" aria-label="Search Button"><i class="fas fa-search"></i></button>
             </div>
         </div>
     </aside>
 
     <!-- Overlay for the Sidebar (Mobile) -->
-    <div id="sidebar-overlay"></div>
+    <div id="sidebar-overlay" onclick="toggleSidebar()" tabindex="-1" aria-hidden="true"></div>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark/Light Theme">
+        <i class="fas fa-moon"></i>
+    </button>
 
     <!-- Main Content -->
     <main id="main-content">
         <!-- Hero Section -->
-        <section id="home" class="hero-section">
+        <section id="home" class="hero-section" aria-labelledby="hero-heading">
             <div class="hero-overlay">
                 <div class="hero-content">
-                    <h1>Welcome to the Auto Industry Blog</h1>
-                    <p>Your area for the latest car reviews, rankings, and industry news.</p>
-                    <a href="#blog" class="btn-primary" aria-label="Explore Articles">Explore Our Articles</a>
+                    <h1 id="hero-heading">Welcome to TorqueTrend</h1>
+                    <p>Your hub for the latest car reviews, rankings, and industry news.</p>
+                    <a href="#blog" class="btn-primary" aria-label="Explore Our Articles">Explore Our Articles <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </section>
 
         <!-- Features Section -->
-        <section id="features" class="features-section">
+        <section id="features" class="features-section" aria-labelledby="features-heading">
             <div class="container">
-                <h2>Our Features</h2>
+                <h2 id="features-heading">Our Features</h2>
                 <div class="features-grid">
                     <div class="feature-card">
-                        <i class="fas fa-cogs icon"></i>
+                        <i class="fas fa-cogs icon" aria-hidden="true"></i>
                         <h3>Innovative Technology</h3>
                         <p>Stay ahead with insights on the latest automotive technologies.</p>
                     </div>
                     <div class="feature-card">
-                        <i class="fas fa-tachometer-alt icon"></i>
+                        <i class="fas fa-tachometer-alt icon" aria-hidden="true"></i>
                         <h3>Performance Reviews</h3>
                         <p>In-depth analyses of the newest models and their capabilities.</p>
                     </div>
                     <div class="feature-card">
-                        <i class="fas fa-brain icon"></i>
+                        <i class="fas fa-brain icon" aria-hidden="true"></i>
                         <h3>AI Integration</h3>
                         <p>Exploring the impact of artificial intelligence on driving.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-car-side icon" aria-hidden="true"></i>
+                        <h3>Market Trends</h3>
+                        <p>Comprehensive coverage of the latest trends in the automotive market.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Blog Section -->
-        <section id="blog" class="content-section">
-            <h2>Latest Blog Posts</h2>
-            <div class="content-grid">
-                <article class="content-box">
-                    <h3>The Future of Electric Vehicles</h3>
-                    <p>Tesla's dominance in the EV market and its impact on the automotive industry.</p>
-                    <a href="#" class="btn-secondary" aria-label="Read More about the EV Industry">Read More</a>
-                </article>
-                <article class="content-box">
-                    <h3>Top 10 Car Maintenance Tips</h3>
-                    <p>Learn key maintenance tips from professionals to keep your car running great for years to come.</p>
-                    <a href="#" class="btn-secondary" aria-label="Learn More about Car Maintenance">Learn More</a>
-                </article>
+        <section id="blog" class="content-section" aria-labelledby="blog-heading">
+            <div class="container">
+                <h2 id="blog-heading">Latest Blog Posts</h2>
+                <div class="content-grid">
+                    <article class="content-box">
+                        <h3>The Future of Electric Vehicles</h3>
+                        <p>Tesla's dominance in the EV market and its impact on the automotive industry.</p>
+                        <a href="#" class="btn-secondary" aria-label="Read More about the EV Industry">Read More <i class="fas fa-arrow-right"></i></a>
+                    </article>
+                    <article class="content-box">
+                        <h3>Top 10 Car Maintenance Tips</h3>
+                        <p>Learn key maintenance tips from professionals to keep your car running great for years to come.</p>
+                        <a href="#" class="btn-secondary" aria-label="Learn More about Car Maintenance">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </article>
+                    <article class="content-box">
+                        <h3>Hybrid vs. Electric: Which is Better?</h3>
+                        <p>An in-depth comparison between hybrid and electric vehicles to help you decide.</p>
+                        <a href="#" class="btn-secondary" aria-label="Compare Hybrid and Electric Vehicles">Compare Now <i class="fas fa-arrow-right"></i></a>
+                    </article>
+                </div>
             </div>
         </section>
 
         <!-- Rankings Section -->
-        <section id="rankings" class="content-section">
-            <h2>Top Vehicle Rankings</h2>
-            <div class="content-grid">
-                <div class="content-box">
-                    <h3>Best SUVs of 2024</h3>
-                    <ul class="no-bullets">
-                        <li><strong>1. Tesla Model X</strong></li>
-                        <li>2. Alfa Romeo Stelvio</li>
-                        <li>3. Ford Bronco Raptor</li>
-                    </ul>
-                    <a href="#" class="btn-secondary" aria-label="View Full List of Best SUVs">View Full List</a>
-                </div>
-                <div class="content-box">
-                    <h3>Best Sedans of 2024</h3>
-                    <ul class="no-bullets">
-                        <li><strong>1. Alfa Romeo Giulia</strong></li>
-                        <li>2. Tesla Model 3</li>
-                        <li>3. BMW 3 Series</li>
-                    </ul>
-                    <a href="#" class="btn-secondary" aria-label="View Full List of Best Sedans">View Full List</a>
+        <section id="rankings" class="content-section" aria-labelledby="rankings-heading">
+            <div class="container">
+                <h2 id="rankings-heading">Top Vehicle Rankings</h2>
+                <div class="content-grid">
+                    <div class="content-box">
+                        <h3>Best SUVs of 2024</h3>
+                        <ul>
+                            <li><strong>1. Tesla Model X</strong></li>
+                            <li>2. Alfa Romeo Stelvio</li>
+                            <li>3. Ford Bronco Raptor</li>
+                        </ul>
+                        <a href="#" class="btn-secondary" aria-label="View Full List of Best SUVs">View Full List <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="content-box">
+                        <h3>Best Sedans of 2024</h3>
+                        <ul>
+                            <li><strong>1. Alfa Romeo Giulia</strong></li>
+                            <li>2. Tesla Model 3</li>
+                            <li>3. BMW 3 Series</li>
+                        </ul>
+                        <a href="#" class="btn-secondary" aria-label="View Full List of Best Sedans">View Full List <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="content-box">
+                        <h3>Top Sports Cars</h3>
+                        <ul>
+                            <li><strong>1. Porsche 911 Turbo</strong></li>
+                            <li>2. Chevrolet Corvette Z06</li>
+                            <li>3. Nissan GT-R</li>
+                        </ul>
+                        <a href="#" class="btn-secondary" aria-label="View Full List of Top Sports Cars">View Full List <i class="fas fa-arrow-right"></i></a>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Reviews Section -->
-        <section id="reviews" class="content-section">
-            <h2>Recent Car Reviews</h2>
-            <div class="content-grid">
-                <article class="content-box">
-                    <h3>2024 Ford Mustang Review</h3>
-                    <p>Experience the thrilling drive of the 2024 Ford Mustang with modern tech and muscle.</p>
-                    <a href="#" class="btn-secondary" aria-label="Read Ford Mustang Review">Read Review</a>
-                </article>
-                <article class="content-box">
-                    <h3>2024 Tesla Model 3 Performance</h3>
-                    <p>The 2024 Tesla Model 3 Performance delivers stunning acceleration, brilliant features, and top-notch safety features.</p>
-                    <a href="#" class="btn-secondary" aria-label="Read Tesla Model 3 Performance Review">Read Review</a>
-                </article>
+        <section id="reviews" class="content-section" aria-labelledby="reviews-heading">
+            <div class="container">
+                <h2 id="reviews-heading">Recent Car Reviews</h2>
+                <div class="content-grid">
+                    <article class="content-box">
+                        <h3>2024 Ford Mustang Review</h3>
+                        <p>Experience the thrilling drive of the 2024 Ford Mustang with modern tech and muscle.</p>
+                        <a href="#" class="btn-secondary" aria-label="Read Ford Mustang Review">Read Review <i class="fas fa-arrow-right"></i></a>
+                    </article>
+                    <article class="content-box">
+                        <h3>2024 Tesla Model 3 Performance</h3>
+                        <p>The 2024 Tesla Model 3 Performance delivers stunning acceleration, brilliant features, and top-notch safety features.</p>
+                        <a href="#" class="btn-secondary" aria-label="Read Tesla Model 3 Performance Review">Read Review <i class="fas fa-arrow-right"></i></a>
+                    </article>
+                    <article class="content-box">
+                        <h3>BMW i4: The Electric Coupe</h3>
+                        <p>A comprehensive review of the BMW i4, blending performance with electric efficiency.</p>
+                        <a href="#" class="btn-secondary" aria-label="Read BMW i4 Review">Read Review <i class="fas fa-arrow-right"></i></a>
+                    </article>
+                </div>
             </div>
         </section>
 
         <!-- Articles Carousel Section -->
-        <section id="articles" class="articles-section">
+        <section id="articles" class="articles-section" aria-labelledby="articles-heading">
             <div class="container">
-                <h2>Latest Articles</h2>
-                <div class="carousel-3d">
+                <h2 id="articles-heading">Latest Articles</h2>
+                <div class="carousel-3d" aria-label="Latest Articles Carousel">
                     <!-- Article Slides -->
                     <div class="carousel-slide" data-index="0">
                         <div class="article-card">
-                            <img src="https://via.placeholder.com/800x600" alt="Article 1">
+                            <img src="https://via.placeholder.com/800x600" alt="Electric Revolution">
                             <div class="article-content">
                                 <h3>Electric Revolution</h3>
                                 <p>How electric vehicles are reshaping the automotive landscape.</p>
-                                <a href="#" class="btn-secondary" onclick="savePreference('article1')">Read More</a>
+                                <a href="#" class="btn-secondary" onclick="savePreference('article1')" aria-label="Read More about Electric Revolution">Read More <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="carousel-slide" data-index="1">
                         <div class="article-card">
-                            <img src="https://via.placeholder.com/800x600" alt="Article 2">
+                            <img src="https://via.placeholder.com/800x600" alt="Autonomous Driving">
                             <div class="article-content">
                                 <h3>Autonomous Driving</h3>
                                 <p>The journey towards fully self-driving cars.</p>
-                                <a href="#" class="btn-secondary" onclick="savePreference('article2')">Read More</a>
+                                <a href="#" class="btn-secondary" onclick="savePreference('article2')" aria-label="Read More about Autonomous Driving">Read More <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
-                    <!-- Additional Slides -->
+                    <div class="carousel-slide" data-index="2">
+                        <div class="article-card">
+                            <img src="https://via.placeholder.com/800x600" alt="Sustainable Materials">
+                            <div class="article-content">
+                                <h3>Sustainable Materials</h3>
+                                <p>Exploring eco-friendly materials in modern car manufacturing.</p>
+                                <a href="#" class="btn-secondary" onclick="savePreference('article3')" aria-label="Read More about Sustainable Materials">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Carousel Navigation -->
                     <button class="carousel-nav prev" aria-label="Previous Slide"><i class="fas fa-chevron-left"></i></button>
                     <button class="carousel-nav next" aria-label="Next Slide"><i class="fas fa-chevron-right"></i></button>
@@ -223,47 +267,47 @@
         </section>
 
         <!-- Personalized Recommendations -->
-        <section id="recommendations" class="recommendations-section">
+        <section id="recommendations" class="recommendations-section" aria-labelledby="recommendations-heading">
             <div class="container">
-                <h2>Recommended for You</h2>
+                <h2 id="recommendations-heading">Recommended for You</h2>
                 <div id="recommended-articles" class="articles-grid">
-                    <!-- Recommended articles will be loaded here -->
+                    <!-- Recommended articles will be dynamically loaded here -->
                 </div>
             </div>
         </section>
 
         <!-- Contact Section with Modal Form -->
-        <section id="contact" class="contact-section">
+        <section id="contact" class="contact-section" aria-labelledby="contact-heading">
             <div class="container">
-                <h2>Get in Touch</h2>
+                <h2 id="contact-heading">Get in Touch</h2>
                 <p>We'd love to hear your thoughts on the future of the automotive industry.</p>
-                <button class="btn-primary" onclick="openModal()">Contact Us</button>
+                <button class="btn-primary" onclick="openModal()" aria-label="Open Contact Form">Contact Us <i class="fas fa-envelope"></i></button>
             </div>
         </section>
     </main>
 
     <!-- Contact Form Modal -->
-    <div id="modal" class="modal">
+    <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
         <div class="modal-content">
-            <span class="close-button" onclick="closeModal()">&times;</span>
-            <h2>Contact Us</h2>
+            <span class="close-button" onclick="closeModal()" aria-label="Close Modal">&times;</span>
+            <h2 id="modal-heading">Contact Us</h2>
             <form id="contact-form">
                 <div class="form-group">
-                    <input type="text" id="contact-name" placeholder="Your Name" required>
+                    <input type="text" id="contact-name" placeholder="Your Name" required aria-required="true" aria-label="Your Name">
                 </div>
                 <div class="form-group">
-                    <input type="email" id="contact-email" placeholder="Your Email" required>
+                    <input type="email" id="contact-email" placeholder="Your Email" required aria-required="true" aria-label="Your Email">
                 </div>
                 <div class="form-group">
-                    <textarea id="contact-message" placeholder="Your Message" required></textarea>
+                    <textarea id="contact-message" placeholder="Your Message" required aria-required="true" aria-label="Your Message"></textarea>
                 </div>
-                <button type="submit" class="btn-secondary">Send Message</button>
+                <button type="submit" class="btn-secondary" aria-label="Send Message">Send Message <i class="fas fa-paper-plane"></i></button>
             </form>
         </div>
     </div>
 
     <!-- Footer Section -->
-    <footer class="footer">
+    <footer class="footer" aria-labelledby="footer-heading">
         <div class="container footer-columns">
             <div class="footer-column">
                 <h4>About Us</h4>
@@ -295,7 +339,7 @@
     </footer>
 
     <!-- Placeholder for search results -->
-    <div id="search-results"></div>
+    <div id="search-results" aria-live="polite" aria-atomic="true"></div>
 
     <!-- Service Worker Registration -->
     <script>
