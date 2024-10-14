@@ -23,7 +23,9 @@ window.addEventListener('scroll', function () {
 
 // Hamburger Menu Toggle
 const hamburgerMenu = document.getElementById('hamburger-menu');
-hamburgerMenu.addEventListener('click', toggleSidebar);
+if (hamburgerMenu) {
+    hamburgerMenu.addEventListener('click', toggleSidebar);
+}
 
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
@@ -192,13 +194,13 @@ function fetchArticlesByIds(ids) {
                 id: 'article1',
                 title: 'Electric Revolution',
                 description: 'How electric vehicles are reshaping the automotive landscape.',
-                image: 'images/article1.jpg'
+                image: 'https://via.placeholder.com/300x200'
             },
             {
                 id: 'article2',
                 title: 'Autonomous Driving',
                 description: 'The journey towards fully self-driving cars.',
-                image: 'images/article2.jpg'
+                image: 'https://via.placeholder.com/300x200'
             }
             // Add more articles as needed
         ];
@@ -210,3 +212,16 @@ function fetchArticlesByIds(ids) {
 
 // Load recommendations on page load
 window.addEventListener('load', loadRecommendedArticles);
+
+// Debounced Search Functionality
+let searchTimeout;
+function debouncedSearch() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(executeSearch, 300);
+}
+
+function executeSearch() {
+    const query = document.getElementById('search-bar') ? document.getElementById('search-bar').value : document.getElementById('sidebar-search-bar').value;
+    alert(`You searched for: ${query}`);
+    // Implement actual search functionality here
+}
