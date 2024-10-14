@@ -98,11 +98,6 @@ window.addEventListener('load', () => {
     }
 });
 
-// Initialize Particles.js
-particlesJS.load('particles-js', 'particles.json', function () {
-    console.log('Particles.js loaded.');
-});
-
 // Carousel Functionality
 document.addEventListener('DOMContentLoaded', function () {
     const slides = document.querySelectorAll('.carousel-slide');
