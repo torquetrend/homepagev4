@@ -1,11 +1,30 @@
 "use strict";
 
+// Theme Toggle Functionality
+const themeToggleBtn = document.getElementById('theme-toggle');
+const htmlElement = document.documentElement;
+
+function toggleTheme() {
+    if (htmlElement.getAttribute('data-theme') === 'dark') {
+        htmlElement.setAttribute('data-theme', 'light');
+        themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+        htmlElement.setAttribute('data-theme', 'dark');
+        themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+}
+
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', toggleTheme);
+}
+
 // Smooth scrolling for internal links
 function scrollToSection(id) {
     const element = document.getElementById(id);
     if (element) {
+        const offsetTop = element.getBoundingClientRect().top + window.pageYOffset - 70;
         window.scrollTo({
-            top: element.offsetTop - 70,
+            top: offsetTop,
             behavior: 'smooth'
         });
     }
@@ -34,10 +53,20 @@ function toggleSidebar() {
     // Update aria-expanded attribute for accessibility
     const expanded = hamburgerMenu.getAttribute('aria-expanded') === 'true' || false;
     hamburgerMenu.setAttribute('aria-expanded', !expanded);
+
+    // Update aria-hidden for sidebar
+    const isHidden = sidebar.getAttribute('aria-hidden') === 'true';
+    sidebar.setAttribute('aria-hidden', !isHidden);
 }
 
 if (hamburgerMenu) {
     hamburgerMenu.addEventListener('click', toggleSidebar);
+    hamburgerMenu.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleSidebar();
+        }
+    });
 }
 
 if (overlay) {
@@ -48,12 +77,32 @@ if (overlay) {
 function openModal() {
     const modal = document.getElementById('modal');
     modal.style.display = 'block';
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    // Focus the first input
+    const firstInput = modal.querySelector('input, textarea');
+    if (firstInput) firstInput.focus();
 }
 
 function closeModal() {
     const modal = document.getElementById('modal');
     modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = 'auto'; // Restore background scrolling
 }
+
+const closeButton = document.querySelector('.close-button');
+if (closeButton) {
+    closeButton.addEventListener('click', closeModal);
+}
+
+// Close modal when pressing Esc key
+window.addEventListener('keydown', function (e) {
+    const modal = document.getElementById('modal');
+    if (e.key === 'Escape' && modal.style.display === 'block') {
+        closeModal();
+    }
+});
 
 // Close modal when clicking outside of it
 window.onclick = function (event) {
@@ -63,12 +112,28 @@ window.onclick = function (event) {
     }
 };
 
-// Contact Form Submission
+// Contact Form Submission with Validation
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        const name = document.getElementById('contact-name').value;
+        const name = document.getElementById('contact-name').value.trim();
+        const email = document.getElementById('contact-email').value.trim();
+        const message = document.getElementById('contact-message').value.trim();
+
+        if (name === '' || email === '' || message === '') {
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        // Basic email validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        // Simulate form submission
         alert(`Thank you for your message, ${name}! We'll get back to you soon.`);
         contactForm.reset();
         closeModal();
@@ -132,6 +197,9 @@ function savePreference(articleId) {
     if (!preferences.includes(articleId)) {
         preferences.push(articleId);
         localStorage.setItem('preferences', JSON.stringify(preferences));
+        alert('Article added to your recommendations!');
+    } else {
+        alert('Article already in your recommendations.');
     }
 }
 
@@ -142,6 +210,7 @@ function loadRecommendedArticles() {
 
     if (recommendationsContainer && preferences.length > 0) {
         fetchArticlesByIds(preferences).then(articles => {
+            recommendationsContainer.innerHTML = ''; // Clear existing content
             articles.forEach(article => {
                 const articleItem = document.createElement('div');
                 articleItem.classList.add('article-grid-item');
@@ -151,13 +220,15 @@ function loadRecommendedArticles() {
                     <div class="article-content">
                         <h3>${article.title}</h3>
                         <p>${article.description}</p>
-                        <a href="#" class="btn-secondary">Read More</a>
+                        <a href="#" class="btn-secondary" aria-label="Read More about ${article.title}">Read More <i class="fas fa-arrow-right"></i></a>
                     </div>
                 `;
 
                 recommendationsContainer.appendChild(articleItem);
             });
         });
+    } else {
+        recommendationsContainer.innerHTML = '<p>No recommendations yet. Explore articles and save your favorites!</p>';
     }
 }
 
@@ -177,7 +248,13 @@ function fetchArticlesByIds(ids) {
                 title: 'Autonomous Driving',
                 description: 'The journey towards fully self-driving cars.',
                 image: 'https://via.placeholder.com/300x200'
-            }
+            },
+            {
+                id: 'article3',
+                title: 'Sustainable Materials',
+                description: 'Exploring eco-friendly materials in modern car manufacturing.',
+                image: 'https://via.placeholder.com/300x200'
+            },
             // Add more articles as needed
         ];
 
@@ -198,7 +275,50 @@ function debouncedSearch() {
 
 function executeSearch() {
     const searchBar = document.getElementById('search-bar') || document.getElementById('sidebar-search-bar');
-    const query = searchBar ? searchBar.value : '';
-    alert(`You searched for: ${query}`);
-    // Implement actual search functionality here
+    const query = searchBar ? searchBar.value.trim() : '';
+    const searchResults = document.getElementById('search-results');
+
+    if (query === '') {
+        searchResults.innerHTML = '';
+        return;
+    }
+
+    // Simulate search results
+    searchResults.innerHTML = `<p>Searching for "<strong>${query}</strong>"...</p>`;
+
+    // Replace with actual search functionality
+    setTimeout(() => {
+        searchResults.innerHTML = `
+            <h3>Search Results for "${query}":</h3>
+            <ul>
+                <li><a href="#blog">Sample Blog Post 1</a></li>
+                <li><a href="#reviews">Sample Review 1</a></li>
+                <li><a href="#articles">Sample Article 1</a></li>
+            </ul>
+        `;
+    }, 500);
+}
+
+// Accessibility: Trap focus within modal when open
+const modal = document.getElementById('modal');
+if (modal) {
+    modal.addEventListener('keydown', function (e) {
+        const focusableElements = modal.querySelectorAll('a[href], button, textarea, input, select');
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.key === 'Tab') {
+            if (e.shiftKey) { // Shift + Tab
+                if (document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                }
+            } else { // Tab
+                if (document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
+            }
+        }
+    });
 }
