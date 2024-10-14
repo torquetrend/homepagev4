@@ -10,6 +10,7 @@
     --transition: all 0.3s ease-in-out;
 }
 
+/* Global Styles */
 body {
     background-color: var(--background-color);
     color: var(--text-color);
@@ -22,6 +23,19 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* Remove Text Decoration from Links */
+a {
+    text-decoration: none !important;
+}
+
+/* Remove Bullet Points from Lists */
+ul,
+ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 /* Custom Scrollbar */
@@ -302,7 +316,8 @@ body {
     margin-bottom: 40px;
 }
 
-.btn-primary {
+.btn-primary,
+.btn-secondary {
     background: var(--accent-color);
     color: var(--text-color);
     padding: 15px 30px;
@@ -314,9 +329,11 @@ body {
     text-decoration: none;
     position: relative;
     overflow: hidden;
+    display: inline-block;
 }
 
-.btn-primary::before {
+.btn-primary::before,
+.btn-secondary::before {
     content: '';
     position: absolute;
     top: 0;
@@ -325,13 +342,16 @@ body {
     height: 100%;
     background: rgba(255, 255, 255, 0.1);
     transition: left 0.5s;
+    pointer-events: none; /* Prevents the pseudo-element from interfering with clicks */
 }
 
-.btn-primary:hover::before {
+.btn-primary:hover::before,
+.btn-secondary:hover::before {
     left: 0;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-secondary:hover {
     background: #1C86EE;
 }
 
@@ -486,6 +506,7 @@ body {
     height: 100%;
     background: rgba(255, 255, 255, 0.1);
     transition: left 0.5s;
+    pointer-events: none; /* Prevents the pseudo-element from interfering with clicks */
 }
 
 .btn-secondary:hover::before {
