@@ -17,11 +17,7 @@
     <!-- Icons (Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
-
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
     <script src="scripts.js" defer></script>
 </head>
@@ -32,9 +28,6 @@
         <input type="checkbox" id="theme-toggle">
         <label for="theme-toggle"><i class="fas fa-adjust"></i></label>
     </div>
-
-    <!-- Interactive Particle Background -->
-    <div id="particles-js"></div>
 
     <!-- Skip Navigation -->
     <a href="#main-content" class="skip-nav">Skip to main content</a>
@@ -107,21 +100,12 @@
 
     <!-- Main Content -->
     <main id="main-content">
-        <!-- Hero Section with Parallax Effect -->
+        <!-- Hero Section -->
         <section id="home" class="hero-section">
-            <div class="parallax-container">
-                <div class="parallax-layer layer-back">
-                    <!-- Background Layer -->
-                    <img src="https://via.placeholder.com/1920x1080" alt="Hero Background">
-                </div>
-                <div class="parallax-layer layer-base">
-                    <!-- Foreground Content -->
-                    <div class="hero-content">
-                        <h1>Welcome to the Auto Industry Blog</h1>
-                        <p>Your area for the latest car reviews, rankings, and industry news.</p>
-                        <a href="#blog" class="btn-primary" aria-label="Explore Articles">Explore Our Articles</a>
-                    </div>
-                </div>
+            <div class="hero-content">
+                <h1>Welcome to the Auto Industry Blog</h1>
+                <p>Your area for the latest car reviews, rankings, and industry news.</p>
+                <a href="#blog" class="btn-primary" aria-label="Explore Articles">Explore Our Articles</a>
             </div>
         </section>
 
@@ -313,12 +297,6 @@
             <p>&copy; 2045 TorqueTrend. All rights reserved.</p>
         </div>
     </footer>
-
-    <!-- AI Chatbot Widget -->
-    <div id="chatbot">
-        <!-- Replace with actual chatbot integration -->
-        <iframe src="chatbot.html"></iframe>
-    </div>
 
     <!-- Placeholder for search results -->
     <div id="search-results"></div>
