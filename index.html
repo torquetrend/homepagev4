@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="styles.css">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&family=Protest+Strike&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Icons (Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
@@ -22,13 +22,7 @@
     <script src="scripts.js" defer></script>
 </head>
 
-<body class="dark-mode">
-    <!-- Theme Toggle -->
-    <div class="theme-switch">
-        <input type="checkbox" id="theme-toggle">
-        <label for="theme-toggle"><i class="fas fa-adjust"></i></label>
-    </div>
-
+<body>
     <!-- Skip Navigation -->
     <a href="#main-content" class="skip-nav">Skip to main content</a>
 
@@ -59,7 +53,7 @@
             </div>
 
             <!-- Hamburger Menu Icon for Mobile -->
-            <div class="hamburger-menu" id="hamburger-menu" aria-label="Menu" aria-expanded="false" onclick="toggleSidebar()">
+            <div class="hamburger-menu" id="hamburger-menu" aria-label="Menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -96,16 +90,18 @@
     </aside>
 
     <!-- Overlay for the Sidebar (Mobile) -->
-    <div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <div id="sidebar-overlay"></div>
 
     <!-- Main Content -->
     <main id="main-content">
         <!-- Hero Section -->
         <section id="home" class="hero-section">
-            <div class="hero-content">
-                <h1>Welcome to the Auto Industry Blog</h1>
-                <p>Your area for the latest car reviews, rankings, and industry news.</p>
-                <a href="#blog" class="btn-primary" aria-label="Explore Articles">Explore Our Articles</a>
+            <div class="hero-overlay">
+                <div class="hero-content">
+                    <h1>Welcome to the Auto Industry Blog</h1>
+                    <p>Your area for the latest car reviews, rankings, and industry news.</p>
+                    <a href="#blog" class="btn-primary" aria-label="Explore Articles">Explore Our Articles</a>
+                </div>
             </div>
         </section>
 
