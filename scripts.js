@@ -23,22 +23,25 @@ window.addEventListener('scroll', function () {
 
 // Hamburger Menu Toggle
 const hamburgerMenu = document.getElementById('hamburger-menu');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('sidebar-overlay');
+
+function toggleSidebar() {
+    hamburgerMenu.classList.toggle('active');
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+
+    // Update aria-expanded attribute for accessibility
+    const expanded = hamburgerMenu.getAttribute('aria-expanded') === 'true' || false;
+    hamburgerMenu.setAttribute('aria-expanded', !expanded);
+}
+
 if (hamburgerMenu) {
     hamburgerMenu.addEventListener('click', toggleSidebar);
 }
 
-function toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebar-overlay');
-    hamburgerMenu.classList.toggle('active');
-    sidebar.classList.toggle('active');
-    overlay.classList.toggle('active');
-}
-
-// Close sidebar when clicking outside
-const sidebarOverlay = document.getElementById('sidebar-overlay');
-if (sidebarOverlay) {
-    sidebarOverlay.addEventListener('click', toggleSidebar);
+if (overlay) {
+    overlay.addEventListener('click', toggleSidebar);
 }
 
 // Modal Functionality
@@ -72,32 +75,6 @@ if (contactForm) {
     });
 }
 
-// Theme Toggle
-const themeToggle = document.getElementById('theme-toggle');
-
-themeToggle.addEventListener('change', () => {
-    if (themeToggle.checked) {
-        document.body.classList.add('light-mode');
-        document.body.classList.remove('dark-mode');
-        localStorage.setItem('theme', 'light');
-    } else {
-        document.body.classList.add('dark-mode');
-        document.body.classList.remove('light-mode');
-        localStorage.setItem('theme', 'dark');
-    }
-});
-
-// Load saved theme preference
-window.addEventListener('load', () => {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    if (savedTheme === 'light') {
-        themeToggle.checked = true;
-        document.body.classList.add('light-mode');
-    } else {
-        document.body.classList.add('dark-mode');
-    }
-});
-
 // Carousel Functionality
 document.addEventListener('DOMContentLoaded', function () {
     const slides = document.querySelectorAll('.carousel-slide');
@@ -118,29 +95,33 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    nextButton.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % slides.length;
-        updateCarousel();
-    });
+    if (nextButton && prevButton) {
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateCarousel();
+        });
 
-    prevButton.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        updateCarousel();
-    });
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            updateCarousel();
+        });
+    }
 
     // Gesture Support using Hammer.js
     const carousel = document.querySelector('.carousel-3d');
-    const hammer = new Hammer(carousel);
+    if (carousel) {
+        const hammer = new Hammer(carousel);
 
-    hammer.on('swipeleft', () => {
-        currentIndex = (currentIndex + 1) % slides.length;
-        updateCarousel();
-    });
+        hammer.on('swipeleft', () => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateCarousel();
+        });
 
-    hammer.on('swiperight', () => {
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        updateCarousel();
-    });
+        hammer.on('swiperight', () => {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            updateCarousel();
+        });
+    }
 
     updateCarousel();
 });
@@ -159,25 +140,25 @@ function loadRecommendedArticles() {
     let preferences = JSON.parse(localStorage.getItem('preferences')) || [];
     const recommendationsContainer = document.getElementById('recommended-articles');
 
-    // For demo purposes, let's assume we have a function fetchArticlesByIds
-    // This function should fetch articles based on IDs
-    fetchArticlesByIds(preferences).then(articles => {
-        articles.forEach(article => {
-            const articleItem = document.createElement('div');
-            articleItem.classList.add('article-grid-item');
+    if (recommendationsContainer && preferences.length > 0) {
+        fetchArticlesByIds(preferences).then(articles => {
+            articles.forEach(article => {
+                const articleItem = document.createElement('div');
+                articleItem.classList.add('article-grid-item');
 
-            articleItem.innerHTML = `
-                <img src="${article.image}" alt="${article.title}">
-                <div class="article-content">
-                    <h3>${article.title}</h3>
-                    <p>${article.description}</p>
-                    <a href="#" class="btn-secondary">Read More</a>
-                </div>
-            `;
+                articleItem.innerHTML = `
+                    <img src="${article.image}" alt="${article.title}">
+                    <div class="article-content">
+                        <h3>${article.title}</h3>
+                        <p>${article.description}</p>
+                        <a href="#" class="btn-secondary">Read More</a>
+                    </div>
+                `;
 
-            recommendationsContainer.appendChild(articleItem);
+                recommendationsContainer.appendChild(articleItem);
+            });
         });
-    });
+    }
 }
 
 // Mock function to simulate fetching articles by IDs
@@ -216,7 +197,8 @@ function debouncedSearch() {
 }
 
 function executeSearch() {
-    const query = document.getElementById('search-bar') ? document.getElementById('search-bar').value : document.getElementById('sidebar-search-bar').value;
+    const searchBar = document.getElementById('search-bar') || document.getElementById('sidebar-search-bar');
+    const query = searchBar ? searchBar.value : '';
     alert(`You searched for: ${query}`);
     // Implement actual search functionality here
 }
